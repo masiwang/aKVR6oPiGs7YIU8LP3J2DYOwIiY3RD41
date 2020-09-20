@@ -1,15 +1,15 @@
-@extends('admin._master')
+@extends('cpanel._components.master')
 
 @section('title')
     Dashboard
 @endsection
 
 @section('content')
-    @include('admin.components._navbar')
+    @include('cpanel._components.navigation')
     <div class="container mt-5">
         <div class="row">
             <div class="col">
-                <h3 class="text-light">Log Aktivitas Anda</h3>
+                <h3 class="text-light">Log Aktivitas @if($user->role == 'operator') Anda @else Semua Admin @endif</h3>
             </div>
         </div>
         <hr style="background-color: #fff"/>
@@ -89,4 +89,5 @@
             </div>
         </div>
     </div>
+    @include('cpanel._components.footer')
 @endsection

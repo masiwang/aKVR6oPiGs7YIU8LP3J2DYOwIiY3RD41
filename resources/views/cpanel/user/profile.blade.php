@@ -1,11 +1,11 @@
-@extends('admin._master')
+@extends('cpanel._components.master')
 
 @section('title')
     Daftar Perusahaan
 @endsection
 
 @section('content')
-    @include('admin.components._navbar')
+    @include('cpanel._components.navigation')
     <div class="container mt-3">
         <div class="row">
             <div class="col d-flex justify-content-between">
@@ -121,5 +121,5 @@
             </div>
         </div>
     </div>
-    
+    @include('cpanel._components.footer')
 @endsection

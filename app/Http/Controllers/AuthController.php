@@ -8,13 +8,14 @@ use Session;
 
 class AuthController extends Controller
 {
-    public function login(Request $request){
+    public function login(){
+        if(Auth::id()){
+            return redirect('admin');
+        }
+        return view('auth.login');
+    }
+    public function login_do(Request $request){
         if(Auth::attempt($request->only('email', 'password'))){
-            $user = \App\User::where('email', $request->email)->first();
-            Session::put([
-                'userid'  => $user->id,
-                'role'  => $user->role
-            ]);
             return redirect('admin');
         }else{
             return back()->with('auth-error', '');

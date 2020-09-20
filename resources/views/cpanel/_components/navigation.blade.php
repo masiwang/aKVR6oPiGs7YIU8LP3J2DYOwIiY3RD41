@@ -18,7 +18,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="{{url('admin/article')}}">Daftar Artikel</a></li>
                         @if ($user ?? ''->role == 'operator')
-                            <li><a class="dropdown-item" href="{{url('admin/article/create')}}">Tambah Baru</a></li>    
+                            <li><a class="dropdown-item" href="{{url('admin/article/new')}}">Tambah Baru</a></li>    
                         @endif
                     </ul>
                 </li>
@@ -30,7 +30,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="{{url('admin/perusahaan')}}">Daftar</a></li>
                         @if ($user ?? ''->role == 'operator')
-                            <li><a class="dropdown-item" href="{{url('admin/perusahaan/create')}}">Baru</a></li>
+                            <li><a class="dropdown-item" href="{{url('admin/perusahaan/new')}}">Baru</a></li>
                             <li><a class="dropdown-item" href="{{url('admin/perusahaan/import')}}">Import</a></li>
                             <li><a class="dropdown-item" href="{{url('admin/perusahaan/export')}}">Eksport</a></li>
                         @endif
@@ -49,7 +49,7 @@
                         <li><a class="dropdown-item" href="{{url('admin/logs')}}">Log Aktivitas</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{{url('admin/list')}}">Daftar Admin</a></li>
-                        @if ($user ?? ''->role == "pimpinan")
+                        @if ($user->role == 'pimpinan')
                         <li><a class="dropdown-item" href="{{url('admin/new')}}">Tambah Admin</a></li>
                         @endif
                         <li><hr class="dropdown-divider"></li>

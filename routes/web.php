@@ -13,68 +13,55 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index'); // FIX
 Route::get('/perusahaan', 'HomeController@getPerusahaan');
 Route::get('/mobile', 'HomeController@index_mobile');
 
-// Auth
-Route::get('login', function(){
-    if(Session::get('role')){return redirect('admin');}
-    return view('auth.login');
-});
-Route::post('login', 'AuthController@login')->name('login');
-Route::get('logout', 'AuthController@logout');
+// Login
+Route::get( 'login', 'AuthController@login')->name('login'); // FIX
+Route::post('login', 'AuthController@login_do'); // FIX
+
+Route::get('logout', 'AuthController@logout'); // FIX
 
 Route::get('/map', 'IndustriController@get_location');
 
 Route::middleware('auth')->group(function () {
     //index admin
-    Route::get('admin', 'AdminController@index_desktop');
-    Route::get('admin/new', 'AdminController@admin_new_view');
-    Route::post('admin/new/save', 'AdminController@admin_new_save');
-    Route::get('admin/list', 'AdminController@admin_list');
-    Route::get('admin/profile', 'AdminController@profile');
-    Route::post('admin/profile/update', 'AdminController@profile_update');
+    Route::get('admin', 'DashboardController@index'); // FIX
+
+    Route::get('admin/list', 'AdminController@index'); // FIX
+    Route::get('admin/new', 'AdminNewController@new'); // FIX
+    Route::post('admin/new', 'AdminNewController@new_save'); // FIX
+
+    Route::get('admin/profile', 'AdminProfileController@index');//FIX
+    Route::post('admin/profile/update', 'AdminProfileController@update');//FIX
+    Route::post('admin/profile/update/image', 'AdminProfileController@update_image');//FIX
     
-    // ===== ARTICLE ===== TODO: Edit nih artikel bos
-    Route::get('admin/article', 'ArticleController@index_desktop');
-    Route::get('admin/article/create', 'ArticleController@new_desktop');
-    Route::post('admin/article/create', 'ArticleController@store');
-    Route::get('admin/article/{id}', 'ArticleController@show');
-    Route::get('admin/article/{id}/edit', 'ArticleController@update_view');
-    Route::post('admin/article/{id}/edit', 'ArticleController@update');
-    Route::post('admin/article/{id}/edit/image', 'ArticleController@update_image');
-    Route::get('admin/article/{id}/delete', 'ArticleController@delete_view');
-    Route::post('admin/article/{id}/delete', 'ArticleController@delete');
+    // ===== ARTICLE =====
+    Route::get('admin/article', 'ArticleController@index'); //FIX
+    Route::get('admin/article/new', 'ArticleNewController@new'); //FIX
+    Route::post('admin/article/new', 'ArticleNewController@new_save'); //FIX
+    Route::get('admin/article/{id}', 'ArticleDetailController@detail'); // FIX
+    Route::get('admin/article/{id}/edit', 'ArticleEditController@edit'); //FIX
+    Route::post('admin/article/{id}/edit', 'ArticleEditController@edit_save'); //FIX
+    Route::post('admin/article/{id}/edit/image', 'ArticleEditController@edit_image'); //FIX
+    Route::post('admin/article/{id}/delete', 'ArticleDeleteController@delete'); //FIX
 
     // ===== LOGS =====
-    Route::get('admin/logs', 'LogController@index');
+    Route::get('admin/logs', 'AdminLogController@index');//FIX
 
     // ===== PERUSAHAAN =====
-    Route::get( 'admin/perusahaan',                         'PerusahaanController@index_desktop');
-    Route::get( 'admin/perusahaan/{id}/view',               'PerusahaanController@view'); 
-    Route::get( 'admin/perusahaan/create',                  'PerusahaanController@create_view');
-    Route::post('admin/perusahaan/create_save',             'PerusahaanController@create_save');
-    Route::get( 'admin/perusahaan/{id}/edit',               'PerusahaanController@edit_view');
-    Route::post('admin/perusahaan/{id}/edit_save',          'PerusahaanController@edit_save');
-    Route::post('admin/perusahaan/{id}/edit_image',         'PerusahaanController@edit_image');
-    Route::get(' admin/perusahaan/{id}/delete',              'PerusahaanController@delete_view');
-    Route::post('admin/perusahaan/{id}/delete',              'PerusahaanController@delete');
-    Route::get( 'admin/perusahaan/import',                  'PerusahaanController@import');
-    Route::post('admin/perusahaan/import/foto_save',        'PerusahaanController@import_foto_save');
-    Route::post('admin/perusahaan/import/speadsheet_save',  'PerusahaanController@import_speadsheet_save');
-    Route::post('admin/perusahaan/delete',                  'PerusahaanController@delete');
-    Route::get( 'admin/perusahaan/export',                  'PerusahaanController@export');
-    Route::get( 'admin/perusahaan/export/xlsx',             'PerusahaanController@export_xlsx');
-
-    Route::get(' admin/download/template',                  'PerusahaanController@download_template');
-
-    Route::get('admin/get', 'PerusahaanController@export_xlsx');
-});
-
-Route::get('deleteview', 'DeleteController@index');
-
-// INDUSTRI
-Route::get('converter', function(){
-    return view('converter');
+    Route::get( 'admin/perusahaan', 'IndustryController@index'); // FIX
+    Route::get( 'admin/perusahaan/{id}/detail', 'IndustryDetailController@detail'); // FIX
+    Route::get( 'admin/perusahaan/new', 'IndustryNewController@new'); // FIX
+    Route::post('admin/perusahaan/new', 'IndustryNewController@new_save'); // FIX
+    Route::get( 'admin/perusahaan/{id}/edit', 'IndustryEditController@edit'); //FIX
+    Route::post('admin/perusahaan/{id}/edit', 'IndustryEditController@edit_save'); //FIX
+    Route::post('admin/perusahaan/{id}/edit/image', 'IndustryEditController@edit_image'); //FIX
+    Route::post('admin/perusahaan/{id}/delete', 'IndustryDeleteController@delete');//FIX
+    Route::get( 'admin/perusahaan/import', 'IndustryImportController@import'); //FIX
+    Route::get(' admin/perusahaan/import/template', 'IndustryImportController@download_template'); // FIX
+    Route::post('admin/perusahaan/import/images', 'IndustryImportController@images_save'); // FIX
+    Route::post('admin/perusahaan/import/speadsheet',  'PerusahaanController@import_speadsheet_save'); //TODO
+    Route::get( 'admin/perusahaan/download', 'IndustryExportController@export'); // FIX
 });

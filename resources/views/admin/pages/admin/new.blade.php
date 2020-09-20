@@ -16,7 +16,7 @@
         <div class="row pt-2">
             <div class="col">
                 <div class="card shadow mb-3 bg-white rounded">
-                    <form action="{{url('admin/new/save')}}" method="POST">
+                    <form action="{{url('admin/new')}}" method="POST">
                     @csrf
                     <div class="card-body p-4">
                         <div class="row">

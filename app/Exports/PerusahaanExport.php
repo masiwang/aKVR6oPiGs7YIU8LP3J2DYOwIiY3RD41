@@ -14,6 +14,6 @@ class PerusahaanExport implements FromView{
         $this->perusahaan = $perusahaan;
     }
     public function view(): View{
-        return view('admin/pages/perusahaan/export_table', ['perusahaan' => $this->perusahaan]);
+        return view('cpanel.template.export', ['perusahaan' => $this->perusahaan]);
     }
 }
