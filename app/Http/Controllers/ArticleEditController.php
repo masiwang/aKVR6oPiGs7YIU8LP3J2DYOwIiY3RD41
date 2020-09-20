@@ -41,6 +41,15 @@ class ArticleEditController extends Controller
 
         if( $article->update($query) ){
 
+            $log_query = [
+                'user_id' => Auth::id(),
+                'action' => 'mengubah',
+                'object' => 'artikel',
+                'name' => $request->name,
+                'created_at' => Carbon::now()
+            ];
+            DB::table('sii_log')->insert($log_query);
+
             return redirect('admin/article')->with('success', 'Artikel berhasil diubah.');
 
         }else{
@@ -72,6 +81,16 @@ class ArticleEditController extends Controller
                 if(!File::exists(public_path().$old_file->image)){
                     File::delete($old_file->image_url);
                 }
+
+                $log_query = [
+                    'user_id' => Auth::id(),
+                    'action' => 'mengubah',
+                    'object' => 'artikel',
+                    'name' => $request->title,
+                    'created_at' => Carbon::now()
+                ];
+                DB::table('sii_log')->insert($log_query);
+
                 Session::flash('success', 'Gambar artikel berhasil diubah.');
                 return redirect()->back();
 

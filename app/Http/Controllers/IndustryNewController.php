@@ -83,6 +83,16 @@ class IndustryNewController extends Controller
         ];
         $image->move('image/perusahaan/', $image_name);
         if( DB::table('sii_perusahaan')->insert($query) ){
+
+            $log_query = [
+                'user_id' => Auth::id(),
+                'action' => 'menambah',
+                'object' => 'perusahaan',
+                'name' => $request->name,
+                'created_at' => Carbon::now()
+            ];
+            DB::table('sii_log')->insert($log_query);
+
             return redirect('admin/perusahaan')->with('success', 'Perusahaan berhasil ditambahkan.');
         }else{
             Session::flash('error', 'Maaf, perusahaan gagal ditambahkan.');

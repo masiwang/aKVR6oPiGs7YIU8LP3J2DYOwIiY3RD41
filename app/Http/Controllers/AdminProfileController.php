@@ -58,6 +58,16 @@ class AdminProfileController extends Controller
 
 
         if($user->update($query)){
+
+            $log_query = [
+                'user_id' => Auth::id(),
+                'action' => 'mengubah profil',
+                'object' => 'admin',
+                'name' => Auth::id(),
+                'created_at' => Carbon::now()
+            ];
+            DB::table('sii_log')->insert($log_query);
+
             Session::flash('success', 'Profil berhasil diubah.');
             return redirect()->back();
         }else{
@@ -87,6 +97,16 @@ class AdminProfileController extends Controller
                 if(!File::exists(public_path().$old_file->image)){
                     File::delete($old_file->image);
                 }
+
+                $log_query = [
+                    'user_id' => Auth::id(),
+                    'action' => 'mengubah profil',
+                    'object' => 'admin',
+                    'name' => Auth::id(),
+                    'created_at' => Carbon::now()
+                ];
+                DB::table('sii_log')->insert($log_query);
+
                 Session::flash('success', 'Profil berhasil diubah.');
                 return redirect()->back();
             }else{

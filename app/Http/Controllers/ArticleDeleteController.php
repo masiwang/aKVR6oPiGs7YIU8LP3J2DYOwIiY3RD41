@@ -13,6 +13,16 @@ class ArticleDeleteController extends Controller
             ->where('id', $request->id);
         
         if($article->delete()){
+
+            $log_query = [
+                'user_id' => Auth::id(),
+                'action' => 'menghapus',
+                'object' => 'artikel',
+                'name' => 'id '.$request->id,
+                'created_at' => Carbon::now()
+            ];
+            DB::table('sii_log')->insert($log_query);
+
             Session::flash('success', 'Artikel berhasil dihapus');
             return redirect('admin/article');
         }else{

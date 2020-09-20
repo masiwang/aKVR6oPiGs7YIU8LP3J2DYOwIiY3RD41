@@ -85,6 +85,16 @@ class IndustryEditController extends Controller
         $perusahaan = DB::table('sii_perusahaan')->where('id', $request->id);
 
         if( $perusahaan->update($query) ){
+
+            $log_query = [
+                'user_id' => Auth::id(),
+                'action' => 'mengubah',
+                'object' => 'perusahaan',
+                'name' => 'id '.$request->id,
+                'created_at' => Carbon::now()
+            ];
+            DB::table('sii_log')->insert($log_query);
+
             return redirect('admin/perusahaan/'.$request->id.'/detail')->with('success', 'Perusahaan berhasil diubah.');
         }else{
             return redirect()->back()->withErrors(['error', 'Perusahaan gagal diubah.'])->withInput();
@@ -112,6 +122,16 @@ class IndustryEditController extends Controller
                 if(!File::exists(public_path().$old_file->file_foto)){
                     File::delete($old_file->file_foto);
                 }
+
+                $log_query = [
+                    'user_id' => Auth::id(),
+                    'action' => 'mengubah',
+                    'object' => 'perusahaan',
+                    'name' => 'id '.$request->id,
+                    'created_at' => Carbon::now()
+                ];
+                DB::table('sii_log')->insert($log_query);
+
                 return redirect('admin/perusahaan/'.$request->id.'/detail')->with('success', 'Foto perusahaan berhasil diubah');
 
             }else{

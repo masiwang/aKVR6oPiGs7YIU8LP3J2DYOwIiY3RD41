@@ -16,6 +16,16 @@ class AuthController extends Controller
     }
     public function login_do(Request $request){
         if(Auth::attempt($request->only('email', 'password'))){
+
+            $log_query = [
+                'user_id' => Auth::id(),
+                'action' => 'masuk',
+                'object' => 'panel',
+                'name' => '',
+                'created_at' => Carbon::now()
+            ];
+            DB::table('sii_log')->insert($log_query);
+
             return redirect('admin');
         }else{
             return back()->with('auth-error', '');

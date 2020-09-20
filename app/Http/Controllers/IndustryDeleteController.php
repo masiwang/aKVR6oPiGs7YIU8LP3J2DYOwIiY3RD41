@@ -13,6 +13,16 @@ class IndustryDeleteController extends Controller
             ->where('id', $request->id);
         
         if($perusahaan->delete()){
+
+            $log_query = [
+                'user_id' => Auth::id(),
+                'action' => 'menghapus',
+                'object' => 'perusahaan',
+                'name' => 'id '.$request->id,
+                'created_at' => Carbon::now()
+            ];
+            DB::table('sii_log')->insert($log_query);
+
             Session::flash('success', 'Perusahaan berhasil dihapus');
             return redirect('admin/perusahaan');
         }else{

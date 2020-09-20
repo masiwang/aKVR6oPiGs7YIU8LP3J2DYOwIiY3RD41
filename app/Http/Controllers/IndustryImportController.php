@@ -88,8 +88,14 @@ class IndustryImportController extends Controller
 
         File::delete('/excel'.'/'.$file_name);
 
-        $log = new LogController();
-        $log->new('mengimport', 'perusahaan', 'sebanyak '.count($query));
+        $log_query = [
+            'user_id' => Auth::id(),
+            'action' => 'mengimport',
+            'object' => 'perusahaan',
+            'name' => 'sebanyak '.count($query),
+            'created_at' => Carbon::now()
+        ];
+        DB::table('sii_log')->insert($log_query);
 
         return back()->with('success_spreadsheet', 'Spreadsheet telah berhasil di upload');
     }

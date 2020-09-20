@@ -44,6 +44,16 @@ class AdminNewController extends Controller
         $image->move('image/profile/', $image_name);
 
         if( DB::table('sii_users')->insert($query) ){
+            // log
+            $log_query = [
+                'user_id' => Auth::id(),
+                'action' => 'menambah',
+                'object' => 'admin',
+                'name' => $request->name,
+                'created_at' => Carbon::now()
+            ];
+            DB::table('sii_log')->insert($log_query);
+
             return redirect('admin/list')->with('success', 'Admin baru berhasil ditambahkan.');
         }else{
             Session::flash('error', 'Maaf, admin baru gagal ditambahkan.');

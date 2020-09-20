@@ -39,6 +39,15 @@ class ArticleNewController extends Controller
         if( $image->move('image/article/', $image_name) ){
 
             if( DB::table('sii_articles')->insert($query) ){
+
+                $log_query = [
+                    'user_id' => Auth::id(),
+                    'action' => 'menambah',
+                    'object' => 'artikel',
+                    'name' => $request->title,
+                    'created_at' => Carbon::now()
+                ];
+                DB::table('sii_log')->insert($log_query);
                 
                 return redirect('admin/article')->with('success', 'Artikel berhasil dibuat.');
 

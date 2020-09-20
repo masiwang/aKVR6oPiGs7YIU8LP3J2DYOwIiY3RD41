@@ -64,30 +64,31 @@ class IndustryExportController extends Controller
         if($request->perusahaan){
             $perusahaan = $perusahaan->where('sii_perusahaan.nama_perusahaan', 'like', '%'.$request->perusahaan.'%');
         }
-
         if($request->tahun_data){
             $perusahaan = $perusahaan->where('sii_perusahaan.tahun_data', $request->industri);
         }
-        
         if($request->kelurahan){
             $perusahaan = $perusahaan->where('sii_kelurahan.name', $request->kelurahan);
         }
-
         if($request->kecamatan){
             $perusahaan = $perusahaan->where('sii_kecamatan.name', $request->kecamatan);
         }
-
         if($request->tipe){
             $perusahaan = $perusahaan->where('sii_industri_tipe.id', $request->tipe);
         }
-
         if($request->produk){
             $perusahaan = $perusahaan->where('sii_perusahaan.produk', 'like','%'.$request->produk.'%');
         }
         $perusahaan = $perusahaan->get();
 
-        // $log = new LogController();
-        // $log->new('mengekspor', 'perusahaan', '');
+        $log_query = [ 'user_id' => Auth::id(),
+            'action' => 'mengeksport',
+            'object' => 'perusahaan',
+            'name' => 'sebanyak '.count($perusahaan),
+            'created_at' => Carbon::now()
+        ];
+        DB::table('sii_log')->insert($log_query);
+
         return (new PerusahaanExport($perusahaan))->download('siika_surakarta.xlsx');
     }
 }
