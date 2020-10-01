@@ -1,11 +1,11 @@
-@extends('admin._master')
+@extends('cpanel._components.master')
 
 @section('title')
     Login
 @endsection
 
 @section('content')
-    @include('admin.components._navbar')
+    @include('cpanel._components.navigation')
     <div class="container mt-5" style="height:80%">
         <div class="row pt-4 d-flex justify-content-center align-content-center" style="height:100%">
             <div class="col-lg-4">
@@ -37,7 +37,7 @@
                         </div>
                         <div class="card-footer d-flex justify-content-end">
                             <a href="{{url('admin/artikel')}}" class="btn btn-light mr-2">Kembali</a>
-                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="submit" class="btn btn-success">Login</button>
                         </div>
                     </form>
                 </div>

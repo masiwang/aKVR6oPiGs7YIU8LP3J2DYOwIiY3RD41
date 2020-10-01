@@ -1,11 +1,11 @@
-@extends('_master')
+@extends('cpanel._components.master')
 
 @section('title')
     Dashboard
 @endsection
 
 @section('content')
-    @include('admin.components._navbar')
+    @include('cpanel._components.navigation')
     <div class="container">
         <div class="row">
             <div class="col-12 px-0">
@@ -16,5 +16,5 @@
         </div>
     </div>
     <div style="height: 4rem"></div>
-    @include('admin.desktop._footer')
+    @include('cpanel._components.footer')
 @endsection

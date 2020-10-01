@@ -7,8 +7,8 @@
 @section('content')
     @include('cpanel._components.navigation')
     <div class="container">
-        <div class="row">
-            <div class="col-8">
+        <div class="row mb-3">
+            <div class="col-12 col-md-8">
                 <div class="card shadow mb-3 bg-white rounded" style="height:25rem">
                     <div class="card-header">
                        <h5 class="mb-0 text-blue">Sebaran Industri</h5> 
@@ -16,7 +16,7 @@
                     <div id="map" style="height:100%" class="card-body p-0"></div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-12 col-md-4">
                 <div class="card shadow mb-3 bg-white rounded" style="height:25rem">
                     <div class="card-header">
                        <h5 class="mb-0 text-blue">Aktivitas Terakhir</h5> 
@@ -26,44 +26,44 @@
                             @foreach ($logs as $log)
                             <li class="list-group-item" style="font-size:0.8em"><b>{{$log->created_at}}</b><br/>Admin {{$log->user_id}} {{$log->action}} {{$log->object}} "{{$log->name}}"</li>
                             @endforeach
-                            <li class="list-group-item text-center" style="font-size:0.8em"><a class="btn btn-primary btn-sm w-50" href="{{url('admin/logs')}}">Lihat semua</a></li>
+                            <li class="list-group-item text-center" style="font-size:0.8em"><a class="btn btn-success btn-sm w-50" href="{{url('admin/logs')}}">Lihat semua</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div style="height: 1rem"></div>
-        <div class="row">
+
+        <div class="row mb-3 mb-md-5">
             <div class="col-12">
                 <div class="card shadow bg-white rounded">
                     <div class="card-header d-flex justify-content-between">
                        <h5 class="mb-0 text-blue">5 Industri terakhir ditambahkan</h5>
-                       <a href="{{url('admin/perusahaan')}}" class="btn btn-sm btn-primary">Lihat Semua</a>
+                       <a href="{{url('admin/perusahaan')}}" class="btn btn-sm btn-success d-none d-md-block">Lihat Semua</a>
                     </div>
                     <div class="card-body" style="font-size: .8rem">
                         <table class="table table-hover table-sm table-industri">
-                            <thead class="text-primary">
+                            <thead class="text-green">
                                 <th width="15%">Nama Perusahaan</th>
-                                <th width="10%">Pemilik</th>
-                                <th width="8%">Telepon</th>
-                                <th>Alamat</th>
-                                <th>Tipe</th>
-                                <th>Komoditas</th>
-                                <th width="5%">Karyawan</th>
+                                <th width="10%" class="d-none d-md-table-cell">Pemilik</th>
+                                <th width="8%" class="d-none d-md-table-cell">Telepon</th>
+                                <th class="d-none d-md-table-cell">Alamat</th>
+                                <th class="d-none d-md-table-cell">Tipe</th>
+                                <th class="d-none d-md-table-cell">Komoditas</th>
+                                <th width="5%" class="d-none d-md-table-cell">Karyawan</th>
                                 <th width="5%"></th>
                             </thead>
                             <tbody>
                                 @foreach ($industri as $i)
                                 <tr>
                                     <td>{{$i->nama_perusahaan}}</td>
-                                    <td>{{$i->nama_pemilik}}</td>
-                                    <td>{{$i->telepon}}</td>
-                                    <td>{{$i->jalan}}, {{$i->kelurahan}}, {{$i->kecamatan}}</td>
-                                    <td>{{$i->tipe_industri}}</td>
-                                    <td>{{$i->komoditas}}</td>
-                                    <td>L: {{$i->karyawan_laki}}<br/>P: {{$i->karyawan_perempuan}}</td>
+                                    <td class="d-none d-md-table-cell">{{$i->nama_pemilik}}</td>
+                                    <td class="d-none d-md-table-cell">{{$i->telepon}}</td>
+                                    <td class="d-none d-md-table-cell">{{$i->jalan}}, {{$i->kelurahan}}, {{$i->kecamatan}}</td>
+                                    <td class="d-none d-md-table-cell">{{$i->tipe_industri}}</td>
+                                    <td class="d-none d-md-table-cell">{{$i->komoditas}}</td>
+                                    <td class="d-none d-md-table-cell">L: {{$i->karyawan_laki}}<br/>P: {{$i->karyawan_perempuan}}</td>
                                     <td>
-                                        <a class="btn btn-sm btn-info" href="{{url('/admin/perusahaan/'.$i->id.'/detail')}}">
+                                        <a class="btn btn-sm btn-success" href="{{url('/admin/perusahaan/'.$i->id.'/detail')}}">
                                             <i>
                                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                     <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
@@ -81,7 +81,6 @@
             </div>
         </div>
     </div>
-    <div style="height: 4rem"></div>
     @include('cpanel._components.footer')
     @foreach ($map_data as $i)
     <input type="hidden" class="map-locator" data-id="{{$i->id}}" data-name="{{$i->nama_perusahaan}}" data-alamat="{{$i->jalan}}, {{$i->kelurahan}}, {{$i->kecamatan}}" data-tipe="{{$i->tipe_id}}" data-tipeName="{{$i->tipe_industri}}" data-x="{{$i->latitude}}" data-y="{{$i->longitude}}">

@@ -19,7 +19,7 @@
                 <img src="{{asset($s->image_url)}}" class="d-block w-100" style="object-fit: cover;width:100%; max-height:400px" alt="...">
                 <div class="carousel-caption d-none d-md-block d-sm-none" style="transform:translate(-15%, 0);position:absolute; bottom:-1px; right:0; width:100%; background-color:rgba(68, 68, 68, 0.73);">
                     <h5>{{$s->title}}</h5>
-                    <p>{{substr($s->body, 0, 100)}}...</p>
+                    <p>{!!substr($s->body, 0, 100)!!}</p>
                   </div>
             </div>
             @endforeach
@@ -122,54 +122,6 @@
                   </div>
             </div>
         </div>
-        {{-- <div style="height: 2rem;"></div>
-        <div class="row">
-            <div class="col-12 px-0">
-                <div class="card shadow bg-white rounded">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted text-center text-uppercase ">Industri</h6>
-                        <h6 class="card-title font-weight-bold text-center">Tekstik dan Produk Tekstil</h6>
-                        <hr>
-                        <h1 class="card-text mb-0 text-center text-primary" style="font-size: 4rem">{{$stats['industri'][0]}}</h1>
-                        <p class="text-center font-italic" style="">unit usaha</p>
-                        <h1 class="card-text mb-0 text-center text-primary" style="font-size: 4rem">{{$stats['karyawan'][0]}}</h1>
-                        <p class="text-center font-italic"style="">pakerja</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div style="height: 2rem;"></div>
-        <div class="row">
-            <div class="col-12 px-0">
-                <div class="card shadow bg-white rounded">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted text-center text-uppercase ">Industri</h6>
-                        <h6 class="card-title font-weight-bold text-center">Aneka Usaha Industri</h6>
-                        <hr>
-                        <h1 class="card-text mb-0 text-center text-primary" style="font-size: 4rem">{{$stats['industri'][1]}}</h1>
-                        <p class="text-center font-italic" style="">unit usaha</p>
-                        <h1 class="card-text mb-0 text-center text-primary" style="font-size: 4rem">{{$stats['karyawan'][1]}}</h1>
-                        <p class="text-center font-italic" style="">pakerja</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div style="height: 2rem;"></div>
-        <div class="row">
-            <div class="col-12 px-0">
-                <div class="card shadow bg-white rounded">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted text-center text-uppercase ">Industri</h6>
-                        <h6 class="card-title font-weight-bold text-center">Agro dan Aneka Pangan</h6>
-                        <hr>
-                        <h1 class="card-text mb-0 mb-0 text-center text-primary" style="font-size: 4rem">{{$stats['industri'][2]}}</h1>
-                        <p class="text-center font-italic"style="">unit usaha</p>
-                        <h1 class="card-text mb-0 text-center text-primary" style="font-size: 4rem">{{$stats['karyawan'][2]}}</h1>
-                        <p class="text-center font-italic"style="">pakerja</p>
-                    </div>
-                </div>   
-            </div>
-        </div> --}}
     </section>
     <div id="charts" style="height: 4rem; margin-top:-2rem"></div>
     <section class="px-3 d-flex justify-content-center">
@@ -350,7 +302,7 @@
                                 </td>
                                 <td>
                                     <a href="{{url('artikel/'.$a->id.'/view')}}" class="text-decoration-none">{{$a->title}}</a><br/>
-                                    {{$a->body}}
+                                    {!!$a->body!!}
                                 </td>
                             </tr>
                         </table>
@@ -371,7 +323,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h4>Informasi Kontak :/</h4>
+                    <h4>Informasi Kontak :.</h4>
                     <hr>
                     <ul class="nav flex-column">
                         <li class="nav-item footer-link">
@@ -406,10 +358,7 @@
                     <hr>
                     <ul class="nav flex-column">
                         <li class="nav-item footer-link">
-                            <a href="https://www.kemendag.go.id/id">Kementrian Perdagangan RI</a>
-                        </li>
-                        <li class="nav-item footer-link">
-                            <a href="http://www.depkop.go.id/">Kementrian Koperasi dan UMKM RI</a>
+                            <a href="https://ipc.disnakerperin.surakarta.go.id/">Industry Promotion Center</a>
                         </li>
                         <li class="nav-item footer-link">
                             <a href="https://surakarta.go.id/">Pemerintah Kota Surakarta</a>
@@ -419,6 +368,12 @@
                         </li>
                         <li class="nav-item footer-link">
                             <a href="http://jdih.surakarta.go.id/">JDIH Kota Surakarta</a>
+                        </li>
+                        <li class="nav-item footer-link">
+                            <a href="https://www.kemendag.go.id/id">Kementrian Perdagangan RI</a>
+                        </li>
+                        <li class="nav-item footer-link">
+                            <a href="http://www.depkop.go.id/">Kementrian Koperasi dan UMKM RI</a>
                         </li>
                     </ul>
                 </div>

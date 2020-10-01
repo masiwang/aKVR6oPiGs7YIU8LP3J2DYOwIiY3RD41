@@ -32,7 +32,7 @@ Dashboard
                                 <label for="TipeIndustri" class="form-label">Tipe Industri</label>
                                 <select id="TipeIndustri" class="form-select @error('tipe_industri') is-invalid @enderror" name="tipe_industri">
                                     @foreach ($tipe_industri as $tipe)
-                                    @if ($tipe->id == $perusahaan->tipe_industri)
+                                    @if ($tipe->id == $perusahaan->industri_tipe_id)
                                     <option selected value="{{$tipe->id}}">{{$tipe->name}}</option>
                                     @else
                                     <option value="{{$tipe->id}}">{{$tipe->name}}</option>
@@ -44,7 +44,7 @@ Dashboard
                                 <label for="SkalaIndustri" class="form-label">Skala Industri</label>
                                 <select id="SkalaIndustri" class="form-select" name="skala_industri">
                                     @foreach ($skala_industri as $skala)
-                                    @if ($skala->id == $perusahaan->skala_industri)
+                                    @if ($skala->id == $perusahaan->skala_industri_id)
                                     <option selected value="{{$skala->id}}">{{$skala->name}}</option>    
                                     @else
                                     <option value="{{$skala->id}}">{{$skala->name}}</option>
@@ -104,7 +104,7 @@ Dashboard
                                 <label for="Kecamatan" class="form-label">Kecamatan</label>
                                 <select id="Kecamatan" class="form-select" name="kecamatan">
                                     @foreach ($kecamatan as $k)
-                                    @if ($k->id == $perusahaan->kecamatan)
+                                    @if ($k->id == $perusahaan->kecamatan_id)
                                     <option selected value="{{$k->id}}">{{$k->name}}</option>    
                                     @else
                                     <option value="{{$k->id}}">{{$k->name}}</option>
@@ -120,7 +120,7 @@ Dashboard
                                 <select id="Kelurahan" class="form-select" name="kelurahan">
                                     <option selected>Pilih Kelurahan</option>
                                     @foreach ($kelurahan as $k)
-                                    @if ($k->id == $perusahaan->kelurahan)
+                                    @if ($k->id == $perusahaan->kelurahan_id)
                                     <option selected value="{{$k->id}}">{{$k->name}}</option>    
                                     @else
                                     <option value="{{$k->id}}">{{$k->name}}</option>
@@ -144,7 +144,14 @@ Dashboard
                                 <label for="KBLI" class="form-label">
                                     KBLI
                                 </label>
-                                <input placeholder="" type="text" class="form-control" name="kbli" id="KBLI" value="{{ $perusahaan->kbli }}">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input placeholder="" type="text" class="form-control" name="kbli" id="KBLI" value="{{ $perusahaan->kbli }}">
+                                    </div>
+                                    <div class="col-6">
+                                        <a class="btn btn-warning" data-toggle="modal" data-target="#pilihKBLI">Pilih KBLI</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -344,6 +351,71 @@ Dashboard
         </div>
     </div>
 </div>
+<div class="modal fade" id="pilihKBLI" tabindex="-1" aria-labelledby="pilihKBLILabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pilihKBLILabel">Pilih KBLI</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select class="form-select" name="pilihKBLI" aria-label="Default select example">
+                    <option selected>Tipe industri</option>
+                    <option value="1">Agro dan Aneka Pangan</option>
+                    <option value="2">Aneka Usaha Industri</option>
+                    <option value="3">Tekstil dan Produk Tekstil</option>
+                    <option value="4">Lainnya</option>
+                </select>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td>KBLI</td>
+                            <td>Nama Industri</td>
+                            <td>Industri Kreatif</td>
+                        </tr>
+                    </thead>
+                    <tbody id="kbli-body">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var selKBLI = $('select[name="pilihKBLI"]');
+    function getNamaIndustri(params) {
+        $.ajax({
+            type: "post",
+            url: "/admin/get_nama_industri",
+            data: {
+                '_token': '{{ csrf_token() }}',
+                'tipe': params
+            },
+            dataType: "json",
+            success: function (response) {
+                var html = '';
+                response.forEach(element => {
+                    var kbli = ((element.kbli == null) ? '' : element.kbli);
+                    var nama_industri = ((element.nama_industri === null) ? '' : element.nama_industri);
+                    var industri_kreatif = ((element.industri_kreatif === null) ? '' : element.industri_kreatif);
+                    html += '<tr><td>'+kbli+'</td><td>'+nama_industri+'</td><td>'+industri_kreatif+'</td></tr>';
+                });
+                $('#kbli-body').html(html);
+            }
+        });
+    }
+    selKBLI.change(function () { 
+        getNamaIndustri(selKBLI.val());
+    });
+    $('input[name="kbli"]').change(function () { 
+        if( $(this).val() < 10 || $(this).val() > 32){
+            alert('Nilai KBLI antara 10 hingga 32');
+        }
+    });
+</script>
 <div style="height: 4rem"></div>
 @include('cpanel._components.footer')
 <script>$('select[name="kelurahan"]').change(function(){var o=$(this).val(),n=$('select[name="kecamatan"]');o<16?n.html('<option value="1" selected>Banjarsari</option>'):o<27?n.html('<option value="2" selected>Jebres</option>'):o<38?n.html('<option value="3" selected>Laweyan</option>'):o<47?n.html('<option value="4" selected>Pasar Kliwon</option>'):o<54?n.html('<option value="5" selected>Serengan</option>'):console.log("error")}),$('select[name="kecamatan"]').change(function(){var o=$(this).val(),n=$('select[name="kelurahan"]');switch(o){case"1":n.html('<option value="1">Banyuanyar</option><option value="2">Banjarsari</option><option value="3">Gilingan</option><option value="4">Joglo</option><option value="5">Kadipiro</option><option value="6">Keprabon</option><option value="7">Kestalan</option><option value="8">Ketelan</option><option value="9">Manahan</option><option value="10">Mangkubumen</option><option value="11">Nusukan</option><option value="12">Punggawan</option><option value="13">Setabelan</option><option value="14">Sumber</option><option value="15">Timuran</option>');break;case"2":n.html('<option value="16">Gendekan</option><option value="17">Jagalan</option><option value="18">Jebres</option><option value="19">Kepatihan Kulon</option><option value="20">Kepatihan Wetan</option><option value="21">Mojosongo</option><option value="22">Pucangsawit</option>       <option value="23">Purwodiningratan</option><option value="24">Sewu</option><option value="25">Sudiroprajan</option><option value="26">Tegalharjo</option>');break;case"3":n.html('<option value="27">Bumi</option><option value="28">Jajar</option><option value="29">Karangasem</option><option value="30">Kerten</option><option value="31">Laweyan</option><option value="32">Pajang</option><option value="33">Panularan</option><option value="34">Panumping</option><option value="35">Purwosari</option><option value="36">Sondakan</option><option value="37">Sriwedari</option>');break;case"4":n.html('<option value="38">Baluwarti</option><option value="39">Gajahan</option><option value="40">Joyosuran</option><option value="41">Kampung Baru</option><option value="42">Kauman</option><option value="43">Kedung Lumbu</option><option value="44">Mojo</option><option value="45">Pasar Kliwon</option><option value="46">Semanggi</option>');break;case"5":n.html('<option value="47">Danukusuman</option><option value="48">Jayengan</option><option value="49">Joyotakan</option><option value="50">Kemlayan</option><option value="51">Kratonan</option><option value="52">Serengan</option><option value="53">Tipes</option>')}});</script>

@@ -14,7 +14,7 @@ Dashboard
                     <h5 class="mb-0 text-blue">Form Perusahaan Baru</h5>
                 </div>
                 <div class="card-body">
-                    <form class="row g-3 mt-0 p-3" action="{{url('admin/perusahaan/new')}}" method="post" enctype="multipart/form-data">
+                    <form class="row g-3 mt-0 p-0 p-md-3" action="{{url('admin/perusahaan/new')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-3">
                             <div class="col-md-3">
@@ -87,7 +87,7 @@ Dashboard
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 <label for="Jalan" class="form-label">Jalan</label>
                                 <input placeholder="Jl. Burung Elang" type="text" class="form-control" name="jalan" id="Jalan">
                             </div>
@@ -119,15 +119,36 @@ Dashboard
                                 </label>
                                 <input placeholder="TDI 530/014/XI/2013 NIPIK 5309.3317.01037" type="text" class="form-control" name="izin_usaha" id="IzinUsaha">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <label for="TahunIzin" class="form-label">Tahun Izin</label>
                                 <input placeholder="2020" type="number" class="form-control" name="tahun_izin" id="TahunIzin">
                             </div>
-                            <div class="col-sm-3">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-4">
                                 <label for="KBLI" class="form-label">
                                     KBLI
                                 </label>
-                                <input placeholder="" type="text" class="form-control" name="kbli" id="KBLI">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input placeholder="" type="text" class="form-control" name="kbli" id="KBLI">
+                                    </div>
+                                    <div class="col-6">
+                                        <a class="btn btn-warning" data-toggle="modal" data-target="#pilihKBLI">Pilih KBLI</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="sektor_industri" class="form-label">
+                                    Sektor industri
+                                </label>
+                                <input placeholder="" type="text" class="form-control" name="sektor_industri" id="sektor_industri">
+                            </div>
+                            <div class="col-4">
+                                <label for="industri_kreatif" class="form-label">
+                                    Industri kreatif
+                                </label>
+                                <input placeholder="" type="text" class="form-control" name="industri_kreatif" id="industri_kreatif">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -296,7 +317,7 @@ Dashboard
                         <hr />
                         <div class="col-12 d-flex justify-content-end">
                             <a href="#" class="btn btn-secondary mr-3">Kembali</a>
-                            <button type="submit" id="buttonSimpan" class="btn btn-primary">Simpan</button>
+                            <button type="submit" id="buttonSimpan" class="btn btn-success">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -304,6 +325,72 @@ Dashboard
         </div>
     </div>
 </div>
+<div class="modal fade" id="pilihKBLI" tabindex="-1" aria-labelledby="pilihKBLILabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pilihKBLILabel">Pilih KBLI</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select class="form-select" name="pilihKBLI" aria-label="Default select example">
+                    <option selected>Tipe industri</option>
+                    <option value="1">Agro dan Aneka Pangan</option>
+                    <option value="2">Aneka Usaha Industri</option>
+                    <option value="3">Tekstil dan Produk Tekstil</option>
+                    <option value="4">Lainnya</option>
+                </select>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td>KBLI</td>
+                            <td>Nama Industri</td>
+                            <td>Industri Kreatif</td>
+                        </tr>
+                    </thead>
+                    <tbody id="kbli-body">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var selKBLI = $('select[name="pilihKBLI"]');
+    function getNamaIndustri(params) {
+        $.ajax({
+            type: "post",
+            url: "/admin/get_nama_industri",
+            data: {
+                '_token': '{{ csrf_token() }}',
+                'tipe': params
+            },
+            dataType: "json",
+            success: function (response) {
+                var html = '';
+                response.forEach(element => {
+                    var kbli = ((element.kbli == null) ? '' : element.kbli);
+                    var nama_industri = ((element.nama_industri === null) ? '' : element.nama_industri);
+                    var industri_kreatif = ((element.industri_kreatif === null) ? '' : element.industri_kreatif);
+                    html += '<tr><td>'+kbli+'</td><td>'+nama_industri+'</td><td>'+industri_kreatif+'</td></tr>';
+                });
+                $('#kbli-body').html(html);
+            }
+        });
+    }
+    selKBLI.change(function () { 
+        getNamaIndustri(selKBLI.val());
+    });
+
+    $('input[name="kbli"]').change(function () { 
+        if( $(this).val() < 10 || $(this).val() > 32){
+            alert('Nilai KBLI antara 10 hingga 32');
+        }
+    });
+</script>
 <div style="height: 4rem"></div>
 @include('cpanel._components.footer')
 <script>$('select[name="kelurahan"]').change(function(){var o=$(this).val(),n=$('select[name="kecamatan"]');o<16?n.html('<option value="1" selected>Banjarsari</option>'):o<27?n.html('<option value="2" selected>Jebres</option>'):o<38?n.html('<option value="3" selected>Laweyan</option>'):o<47?n.html('<option value="4" selected>Pasar Kliwon</option>'):o<54?n.html('<option value="5" selected>Serengan</option>'):console.log("error")}),$('select[name="kecamatan"]').change(function(){var o=$(this).val(),n=$('select[name="kelurahan"]');switch(o){case"1":n.html('<option value="1">Banyuanyar</option><option value="2">Banjarsari</option><option value="3">Gilingan</option><option value="4">Joglo</option><option value="5">Kadipiro</option><option value="6">Keprabon</option><option value="7">Kestalan</option><option value="8">Ketelan</option><option value="9">Manahan</option><option value="10">Mangkubumen</option><option value="11">Nusukan</option><option value="12">Punggawan</option><option value="13">Setabelan</option><option value="14">Sumber</option><option value="15">Timuran</option>');break;case"2":n.html('<option value="16">Gendekan</option><option value="17">Jagalan</option><option value="18">Jebres</option><option value="19">Kepatihan Kulon</option><option value="20">Kepatihan Wetan</option><option value="21">Mojosongo</option><option value="22">Pucangsawit</option>       <option value="23">Purwodiningratan</option><option value="24">Sewu</option><option value="25">Sudiroprajan</option><option value="26">Tegalharjo</option>');break;case"3":n.html('<option value="27">Bumi</option><option value="28">Jajar</option><option value="29">Karangasem</option><option value="30">Kerten</option><option value="31">Laweyan</option><option value="32">Pajang</option><option value="33">Panularan</option><option value="34">Panumping</option><option value="35">Purwosari</option><option value="36">Sondakan</option><option value="37">Sriwedari</option>');break;case"4":n.html('<option value="38">Baluwarti</option><option value="39">Gajahan</option><option value="40">Joyosuran</option><option value="41">Kampung Baru</option><option value="42">Kauman</option><option value="43">Kedung Lumbu</option><option value="44">Mojo</option><option value="45">Pasar Kliwon</option><option value="46">Semanggi</option>');break;case"5":n.html('<option value="47">Danukusuman</option><option value="48">Jayengan</option><option value="49">Joyotakan</option><option value="50">Kemlayan</option><option value="51">Kratonan</option><option value="52">Serengan</option><option value="53">Tipes</option>')}});</script>

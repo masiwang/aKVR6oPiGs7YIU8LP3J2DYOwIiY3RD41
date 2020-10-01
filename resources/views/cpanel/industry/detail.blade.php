@@ -82,6 +82,15 @@
                             <td>{{$perusahaan->kbli}}</td>
                         </tr>
                         <tr>
+                            <td><b>Sektor industri</b></td>
+                            <td>{{$perusahaan->sektor_industri}}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td><b>Industri Kreatif</b></td>
+                            <td>{{$perusahaan->industri_kreatif}}</td>
+                        </tr>
+                        <tr>
                             <td><b>NIK</b></td>
                             <td>{{$perusahaan->nik}}</td>
                         </tr>
@@ -171,7 +180,7 @@
                  <div class="row">
                     <div class="col-12 text-right">
                         <a  class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" style="width: 6rem">Hapus</a>
-                        <a href="{{url('/admin/perusahaan/'.$perusahaan->perusahaan_id.'/edit')}}" class="btn btn-warning" style="width: 6rem">Edit</a>
+                        <a href="{{url('/admin/perusahaan/'.$perusahaan->id.'/edit')}}" class="btn btn-warning" style="width: 6rem">Edit</a>
                     </div>
                  </div>
                  @endif
@@ -182,7 +191,7 @@
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form action="{{ url('admin/perusahaan/'.$perusahaan->perusahaan_id.'/delete') }}" method="POST">
+                <form action="{{ url('admin/perusahaan/'.$perusahaan->id.'/delete') }}" method="POST">
                     @csrf
                     <div class="modal-header bg-danger text-light">
                         <h5 class="modal-title" id="deleteModalLabel">Hapus perusahaan</h5>
@@ -192,7 +201,7 @@
                     </div>
                     <div class="modal-body">
                         Yakin menghapus {{ $perusahaan->badan_usaha }} {{ $perusahaan->nama_perusahaan }} dari database?
-                        <input type="hidden" name="id" value="{{ $perusahaan->perusahaan_id }}">
+                        <input type="hidden" name="id" value="{{ $perusahaan->id }}">
                     </div>
                     <div class="modal-footer">
                         <a type="button" class="btn btn-secondary" data-dismiss="modal">Batal</a>

@@ -25,7 +25,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="Title" class="form-label">Isi</label>
-                                <textarea class="form-control" name="body" rows="13" placeholder="Isi artikel"></textarea>
+                                <textarea id="mytextarea" name="body" rows="13" placeholder="Isi artikel"></textarea>
                             </div>
                             <div class="text-right">
                                 <a href="#" class="btn btn-secondary shadow rounded mr-2">Batal</a>
@@ -37,6 +37,5 @@
             </div>
         </div>
     </div>
-    <div style="height: 4rem"></div>
     @include('cpanel._components.footer')
 @endsection

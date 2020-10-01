@@ -16,31 +16,31 @@
                     <div class="card-body">
                         <p><b>1. Download template</b></p>
                         <p>Berikut adalah link download template apabila Anda belum memiliki template import perusahaan.</p>
-                        <p><a href="{{url('admin/download/template')}}" class="btn btn-primary btn-sm">Download template</a></p>
+                        <p><a href="{{url('admin/perusahaan/import/template')}}" class="btn btn-success btn-sm">Download template</a></p>
                         <p><b>2. Upload folder foto</b></p>
                         <p>Folder foto berisi dokumen foto perusahaan dengan format .jpg</p>
                         @if (Session::has('success_foto'))
-                        <p><button disabled class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadFolderFotoModal">Folder foto berhasil di upload</button></p>
+                        <p><button disabled class="btn btn-success btn-sm" data-toggle="modal" data-target="#uploadFolderFotoModal">Folder foto berhasil di upload</button></p>
                         @else
-                        <p><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadFolderFotoModal">Upload folder foto</button></p>    
+                        <p><button class="btn btn-success btn-sm" data-toggle="modal" data-target="#uploadFolderFotoModal">Upload folder foto</button></p>    
                         @endif
                         <p><b>3. Upload spreadsheet</b></p>
                         <p>Sebelum melakukan upload, mohon periksa kembali file Anda. Proses upload tidak dapat dibatalkan.</p>
                         @if (Session::has('success_spreadsheet'))
-                        <p><button disabled class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadSpreadsheetModal">Spreadsheet berhasil di upload</button></p>
+                        <p><button disabled class="btn btn-success btn-sm" data-toggle="modal" data-target="#uploadSpreadsheetModal">Spreadsheet berhasil di upload</button></p>
                         @else
-                        <p><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#uploadSpreadsheetModal">Upload spreadsheet</button></p>    
+                        <p><button class="btn btn-success btn-sm" data-toggle="modal" data-target="#uploadSpreadsheetModal">Upload spreadsheet</button></p>    
                         @endif
                     </div>
                     <div class="card-footer text-right">
-                        <a class="btn btn-primary" href="{{url('admin/perusahaan')}}">Selesai</a>
+                        <a class="btn btn-success" href="{{url('admin/perusahaan')}}">Selesai</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="uploadFolderFotoModal" data-backdrop="static" data-keyboard="false" tabindex="-1"aria-labelledby="uploadFolderFotoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form action="{{url('admin/perusahaan/import/images')}}" method="post" enctype="multipart/form-data">
                     @csrf
@@ -61,16 +61,16 @@
                     </div>
                     <div class="modal-footer">
                         <a type="button" class="btn btn-secondary" data-dismiss="modal">Batal</a>
-                        <button type="submit" class="btn btn-primary">Upload</button>
+                        <button type="submit" class="btn btn-success">Upload</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <div class="modal fade" id="uploadSpreadsheetModal" data-backdrop="static" data-keyboard="false" tabindex="-1"aria-labelledby="uploadSpreadsheetModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form action="{{url('admin/perusahaan/import/speadsheet_save')}}" method="post" enctype="multipart/form-data">
+                <form action="{{url('admin/perusahaan/import/speadsheet')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="uploadSpreadsheetModalLabel">Upload Spreadsheet</h5>
@@ -103,7 +103,7 @@
                     </div>
                     <div class="modal-footer">
                         <a type="button" class="btn btn-secondary" data-dismiss="modal">Batal</a>
-                        <button type="submit" class="btn btn-primary">Upload</button>
+                        <button type="submit" class="btn btn-success">Upload</button>
                     </div>
                 </form>
             </div>

@@ -22,17 +22,15 @@
                             </div>
                             <div class="mb-3">
                                 <label for="articleTitle" class="form-label">Foto Artikel</label><br/>
-                                <img src="{{asset($article->image_url)}}" style="max-height:200px" alt=""><br/>
+                                <img src="{{asset($article->image_url)}}" style="max-height:200px"><br/>
                                 <a class="btn btn-warning" data-toggle="modal" data-target="#exampleModal" data-id="{{$article->id}}">Ganti foto</a>
                             </div>
                             <div class="mb-3">
-                                <label for="Title" class="form-label">Isi</label>
-                                <textarea class="form-control" name="body" rows="13" placeholder="Isi artikel">{{$article->body}}</textarea>
-                                <small class="text-primary">*TIPS: Tulis dengan bahasa HTML</small>
+                                <textarea class="form-control" id="mytextarea" name="body" rows="13" placeholder="Isi artikel">{{$article->body}}</textarea>
                             </div>
                             <div class="text-right">
                                 <a href="#" class="btn btn-secondary shadow rounded mr-2">Batal</a>
-                                <button type="submit" class="btn btn-primary shadow rounded">Simpan</button>
+                                <button type="submit" class="btn btn-success shadow rounded">Simpan</button>
                             </div>
                         </form>
                     </div>
@@ -63,6 +61,5 @@
             </div>
         </div>
     </div>
-    <div style="height: 4rem"></div>
     @include('cpanel._components.footer')
 @endsection

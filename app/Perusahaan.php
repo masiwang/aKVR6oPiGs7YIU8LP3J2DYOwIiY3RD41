@@ -23,6 +23,8 @@ class Perusahaan extends Model
         'izin_usaha',
         'tahun_izin',
         'kbli',
+        'sektor_industri',
+        'industri_kreatif',
         'komoditi',
         'jenis_produk',
         'tenaga_kerja_laki',

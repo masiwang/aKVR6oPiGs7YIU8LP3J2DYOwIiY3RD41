@@ -15,7 +15,7 @@ class LogController extends Controller
         }
         if($request->objek){
             $logs = $logs->where('object', $request->objek);
-        }
+        } 
         $logs = $logs->orderBy('id', 'desc')->paginate(10);
 
         return view('admin.pages.logs.index', ['logs'=>$logs]);

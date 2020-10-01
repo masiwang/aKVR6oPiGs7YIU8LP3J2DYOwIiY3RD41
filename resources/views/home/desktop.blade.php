@@ -19,7 +19,7 @@
                 <img src="{{asset($s->image_url)}}" class="d-block w-100" style="object-fit: cover;width:100%; max-height:400px" alt="...">
                 <div class="carousel-caption d-none d-md-block d-sm-none" style="transform:translate(-15%, 0);position:absolute; bottom:-1px; right:0; width:100%; background-color:rgba(68, 68, 68, 0.73);">
                     <h5>{{$s->title}}</h5>
-                    <p>{{substr($s->body, 0, 100)}}...</p>
+                    <p>{!!substr($s->body, 0, 100)!!}</p>
                   </div>
             </div>
             @endforeach
@@ -33,6 +33,7 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
+    
     <div id="dasar-hukum" style="height: 4rem"></div>
     <section class="container d-flex justify-content-center">
         <div class="row">
@@ -225,8 +226,8 @@
             </div>
         </div>
     </section>
-    <div style="height: 4rem"></div>
-    <section id="article" class="container d-flex justify-content-center">
+    <div id="artikel" style="height: 4rem"></div>
+    <section class="container d-flex justify-content-center">
         <div class="row">
             <div class="col-sm-12 shadow bg-white rounded p-3">
                 <div class="row article-title">
@@ -242,7 +243,7 @@
                     </div>
                     <div class="col-10">
                         <b><a href="{{url('artikel/'.$a->id.'/view')}}" class="text-decoration-none">{{$a->title}}</a></b><br />
-                        <p>{{$a->body}}</p>
+                        <p>{!!$a->body!!}</p>
                     </div>
                 </div>
                 @endforeach
@@ -294,10 +295,7 @@
                     <hr>
                     <ul class="nav flex-column">
                         <li class="nav-item footer-link">
-                            <a href="https://www.kemendag.go.id/id">Kementrian Perdagangan RI</a>
-                        </li>
-                        <li class="nav-item footer-link">
-                            <a href="http://www.depkop.go.id/">Kementrian Koperasi dan UMKM RI</a>
+                            <a href="https://ipc.disnakerperin.surakarta.go.id/">Industry Promotion Center</a>
                         </li>
                         <li class="nav-item footer-link">
                             <a href="https://surakarta.go.id/">Pemerintah Kota Surakarta</a>
@@ -307,6 +305,12 @@
                         </li>
                         <li class="nav-item footer-link">
                             <a href="http://jdih.surakarta.go.id/">JDIH Kota Surakarta</a>
+                        </li>
+                        <li class="nav-item footer-link">
+                            <a href="https://www.kemendag.go.id/id">Kementrian Perdagangan RI</a>
+                        </li>
+                        <li class="nav-item footer-link">
+                            <a href="http://www.depkop.go.id/">Kementrian Koperasi dan UMKM RI</a>
                         </li>
                     </ul>
                 </div>

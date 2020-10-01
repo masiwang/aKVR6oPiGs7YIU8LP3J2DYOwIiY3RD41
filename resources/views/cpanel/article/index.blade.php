@@ -11,12 +11,14 @@
             <div class="col-12">
                 <div class="card shadow bg-white rounded">
                     <div class="card-body pb-0">
-                        <form class="row g-2">
-                            <div class="col-auto">
-                                <input type="text" name="title" class="form-control form-control-sm" placeholder="Judul">
-                            </div>
-                            <div class="col-auto">
-                                <button type="submit" class="btn btn-primary btn-sm mb-3">Cari</button>
+                        <form class="row">
+                            <div class="col-12 d-flex">
+                                <div class="flex-grow-1 pr-md-2">
+                                    <input type="text" name="title" class="form-control form-control-sm" placeholder="Judul">
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-success btn-sm mb-3">Cari</button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -35,9 +37,9 @@
                                     <img src="{{asset($article->image_url)}}" style="height: 80px; width: 80px" alt="">
                                 </td>
                                 <td style="width: 90%">
-                                    <a href="{{ url('admin/article/'.$article->id) }}" class="text-decoration-none"><b>{{$article->title}}</b><br/></a>
+                                    <a href="{{ url('admin/article/'.$article->id) }}" class="text-decoration-none text-success"><b>{{$article->title}}</b><br/></a>
                                     <small style="font-size: .7rem">Admin {{$article->author}} - <i>{{ \Carbon\Carbon::parse($article->created_at)->format('j F Y : H.m') }}</i></small><br/>
-                                    <p class="mb-0">{{substr($article->body, 0, 200)}}...</p><br/>
+                                    <p class="mb-0">{!!substr($article->body, 0, 200)!!}</p><br/>
                                     @if (Session::get('role') == 'operator')
                                     <p>
                                         <a href="{{url('admin/article/'.$article->id)}}" class="btn btn-sm btn-info">

@@ -12,6 +12,9 @@ use Illuminate\Support\Str;
 class IndustryEditController extends Controller
 {
     public function edit($id){
+        if( Auth::user()->role == 'pimpinan' ){
+            return back();
+        }
         $user = DB::table('sii_users')
             ->where('id', Auth::id())
             ->first();

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,13 +13,16 @@ use App\Imports\PerusahaanImport;
 class IndustryImportController extends Controller
 {
     public function import(){
+        if( Auth::user()->role == 'pimpinan' ){
+            return back();
+        }
         $user = DB::table('sii_users')->where('id', Auth::id())->first();
         $tipe_industri = DB::table('sii_industri_tipe')->get();
         return view('cpanel.industry.import', ['user' => $user, 'tipe_industri' => $tipe_industri]);
     }
 
     public function download_template(){
-        return response()->download('excel/template.xlsx', 'template_industri.xlsx', 200);
+        return response()->download(public_path().'excel/template.xlsx', 'template_industri.xlsx');
     }
 
     public function images_save(Request $request){
@@ -32,9 +35,9 @@ class IndustryImportController extends Controller
 
     public function spreadsheet_save(Request $request){
         $file_name = $request->file->getClientOriginalName();
-        $request->file->move('/excel', $file_name);
+        $request->file->move(public_path().'/excel', $file_name);
 
-        $array = Excel::toCollection(new PerusahaanImport, '/excel'.'/'.$file_name);
+        $array = Excel::toCollection(new PerusahaanImport, public_path().'/excel'.'/'.$file_name);
         $query = array();
         for($i = 1; $i < count($array[0]); $i++){
             $data = [
@@ -55,30 +58,32 @@ class IndustryImportController extends Controller
                 'izin_usaha'                => $array[0][$i][13],
                 'tahun_izin'                => $array[0][$i][14],
                 'kbli'                      => $array[0][$i][15],
-                'komoditas'                 => $array[0][$i][16],
-                'jenis_produk'              => $array[0][$i][17],
-                'karyawan_laki'             => $array[0][$i][18],
-                'karyawan_perempuan'        => $array[0][$i][19],
-                'nilai_investasi'           => $array[0][$i][20],
-                'jumlah_kapasitas_produksi' => $array[0][$i][21],
-                'satuan_kapasitas_produksi' => $array[0][$i][22],
-                'nilai_produksi'            => $array[0][$i][23],
-                'bahan_baku_utama'          => $array[0][$i][24],
-                'nilai_bahan_baku'          => $array[0][$i][25],
-                'bahan_penolong'            => $array[0][$i][26],
-                'nilai_bahan_penolong'      => $array[0][$i][27],
-                'wilayah_pemasaran'         => $array[0][$i][28],
-                'negara_tujuan_export'      => $array[0][$i][29],
-                'energi'                    => $array[0][$i][30],
-                'limbah_dihasilkan'         => $array[0][$i][31],
-                'jumlah_limbah'             => $array[0][$i][32],
-                'satuan_limbah'             => $array[0][$i][33],
-                'olahan_limbah'             => $array[0][$i][34],
-                'nik'                       => $array[0][$i][35],
-                'latitude'                  => ($array[0][$i][36] > 999999) ? round($array[0][$i][36]/10) : $array[0][$i][36],
-                'longitude'                 => ($array[0][$i][37] > 9999999) ? round($array[0][$i][37]/10) : $array[0][$i][37],
-                'skala_industri'            => $array[0][$i][38],
-                'file_foto'                 => $array[0][$i][39],
+                'sektor_industri'           => $array[0][$i][16],
+                'industri_kreatif'          => $array[0][$i][17],
+                'komoditas'                 => $array[0][$i][18],
+                'jenis_produk'              => $array[0][$i][19],
+                'karyawan_laki'             => $array[0][$i][20],
+                'karyawan_perempuan'        => $array[0][$i][21],
+                'nilai_investasi'           => $array[0][$i][22],
+                'jumlah_kapasitas_produksi' => $array[0][$i][23],
+                'satuan_kapasitas_produksi' => $array[0][$i][24],
+                'nilai_produksi'            => $array[0][$i][25],
+                'bahan_baku_utama'          => $array[0][$i][26],
+                'nilai_bahan_baku'          => $array[0][$i][27],
+                'bahan_penolong'            => $array[0][$i][28],
+                'nilai_bahan_penolong'      => $array[0][$i][29],
+                'wilayah_pemasaran'         => $array[0][$i][30],
+                'negara_tujuan_export'      => $array[0][$i][31],
+                'energi'                    => $array[0][$i][32],
+                'limbah_dihasilkan'         => $array[0][$i][33],
+                'jumlah_limbah'             => $array[0][$i][34],
+                'satuan_limbah'             => $array[0][$i][35],
+                'olahan_limbah'             => $array[0][$i][36],
+                'nik'                       => $array[0][$i][37],
+                'latitude'                  => ($array[0][$i][38] > 999999) ? round($array[0][$i][38]/10) : $array[0][$i][38],
+                'longitude'                 => ($array[0][$i][39] > 9999999) ? round($array[0][$i][39]/10) : $array[0][$i][39],
+                'skala_industri'            => $array[0][$i][40],
+                'file_foto'                 => $array[0][$i][41],
             ];
             array_push($query, $data);
         }

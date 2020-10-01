@@ -6,29 +6,31 @@
 
 @section('content')
     @include('cpanel._components.navigation')
-    <div class="container mt-5">
-        <div class="row pt-2">
+    <div class="container">
+        <div class="row pt-2 mb-3 mb-md-5">
             <div class="col">
                 <div class="card shadow mb-3 bg-white rounded">
                     <div class="card-body">
                         <h3>{{ $article->title }}</h3>
-                        <p><small>Ditulis oleh: Admin {{ $user->id }}</small> | {{ \Carbon\Carbon::parse($article->created_at)->format('j F Y - H:m') }}</p>
                         <hr>
                         <img src="{{asset($article->image_url)}}" alt="" srcset="" style="max-height:20rem">
                         <div style="height:1rem"></div>
-                        {{$article->body}}
+                        <p><small>Ditulis oleh: Admin {{ $user->id }} | {{ \Carbon\Carbon::parse($article->created_at)->format('j F Y - H:m') }}</small></p>
+                        {!! $article->body !!}
+                        <hr>
+                        @if ($user->role=='operator')
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button  class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Hapus</button>
+                                <a href="{{ url('admin/article/'.$article->id.'/edit') }}" class="btn btn-warning">Edit</a>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 text-right">
-                <button  class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Hapus</button>
-                <a href="{{ url('admin/article/'.$article->id.'/edit') }}" class="btn btn-warning">Edit</a>
-            </div>
-        </div>
     </div>
-    <div style="height: 4rem"></div>
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">

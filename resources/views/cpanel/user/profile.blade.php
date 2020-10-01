@@ -6,35 +6,40 @@
 
 @section('content')
     @include('cpanel._components.navigation')
-    <div class="container mt-3">
+    <div class="container">
         <div class="row">
             <div class="col d-flex justify-content-between">
-                <h3 class="text-light">Profil {{ $user->name }}</h3>
+                <h3 class="text-success">Profil {{ $user->name }}</h3>
             </div>
         </div>
-        <hr style="background-color: #fff"/>
-        <div class="row pt-2">
+        <hr class="d-none d-md-block" style="background-color: #fff"/>
+        <div class="row">
             <div class="col">
                 <div class="card shadow mb-3 bg-white rounded">
                     <div class="card-body p-4">
                         <div class="row">
-                            <div class="col-md-2">
-                                <div class="row">
-                                    <img src="{{ asset($user->image) }}" style="width:100%; height:100%"/>
-                                    <button class="btn btn-warning btn-sm w-100" data-toggle="modal" data-target="#updateImage">Ganti foto</button>
+                            <div class="col-md-2 mb-3 mb-md-0">
+                                <div class="row text-center">
+                                    <div class="col-12">
+                                        <img src="{{ asset($user->image) }}" style="width:100%"/><br>
+                                        <button class="btn btn-warning btn-sm w-100" data-toggle="modal" data-target="#updateImage">Ganti foto</button>
+                                    </div>
                                 </div>
                                 <hr/>
                                 <div class="row">
-                                    <ul class="list-group">
-                                        <li class="list-group-item active" aria-current="true">Role</li>
-                                        <li class="list-group-item">{{ucwords($user->role)}}</li>
-                                    </ul>
+                                    <div class="col-12">
+                                        <ul class="list-group">
+                                            <li class="list-group-item bg-success text-white" aria-current="true">Role</li>
+                                            <li class="list-group-item">{{ucwords($user->role)}}</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-10">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <p class="text-primary"><b>Update profile</b></p>
+                                        <hr class="d-block d-md-none">
+                                        <h5 class="text-success mb-2">Update profile</h5>
                                         <form action="{{ url('/admin/profile/update') }}" method="post">
                                             @csrf
                                             <table class="table table-bordered">
@@ -58,7 +63,7 @@
                                                 </tbody>
                                             </table>
                                             <div class="text-right">
-                                                <button class="btn btn-primary btn-sm">Simpan</button>
+                                                <button class="btn btn-success btn-sm">Simpan</button>
                                             </div>
                                         </form>
                                     </div>
@@ -66,23 +71,24 @@
 
                                 <hr/>
                                 <div class="row">
-                                    <p class="text-primary"><b>Aktivitas terakhir Anda</b></p>
+                                    <h5 class="text-success">Aktivitas terakhir Anda</h5>
                                     <div class="col-sm-12">
                                         <table class="table table-borderless">
                                             <thead>
                                                 <tr>
-                                                    <th width="20%">Waktu</th>
+                                                    <th width="20%" class="d-none d-md-table-cell">Waktu</th>
                                                     <th>Aktivitas</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($logs as $log)
                                                 <tr>
-                                                    <td>
+                                                    <td  class="d-none d-md-table-cell">
                                                         {{$log->created_at}}
                                                     </td>
                                                     <td>
                                                         {{ucwords($log->action)}} {{ucwords($log->object)}} {{ucwords($log->name)}}
+                                                        <p class="d-block d-md-none font-weight-lighter font-italic"><small>{{$log->created_at}}</small></p>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -92,7 +98,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12 text-right">
-                                        <a class="btn btn-primary btn-sm" href="{{url('admin/logs')}}">Lihat semua aktivitas</a>
+                                        <a class="btn btn-success btn-sm" href="{{url('admin/logs')}}">Lihat semua aktivitas</a>
                                     </div>
                                 </div>
                             </div>

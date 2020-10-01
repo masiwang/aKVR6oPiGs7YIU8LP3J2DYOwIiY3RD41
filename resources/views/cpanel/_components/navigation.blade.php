@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-transparent-rodo shadow mb-5 py-0">
+<nav class="navbar navbar-expand-lg navbar-dark shadow mb-3 mb-md-5 py-0" style="background-color: #3a526a">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{url('/')}}"><span style="font-size:1.1em;font-weight:800">SIIKa</span><br/><div style="font-size:0.6em;transform:translateY(-6px)">Surakarta</div></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,8 +16,8 @@
                         Artikel
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="{{url('admin/article')}}">Daftar Artikel</a></li>
-                        @if ($user ?? ''->role == 'operator')
+                        <li><a class="dropdown-item" href="{{url('admin/article')}}">Daftar</a></li>
+                        @if ($user->role == 'operator')
                             <li><a class="dropdown-item" href="{{url('admin/article/new')}}">Tambah Baru</a></li>    
                         @endif
                     </ul>
@@ -29,10 +29,10 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="{{url('admin/perusahaan')}}">Daftar</a></li>
-                        @if ($user ?? ''->role == 'operator')
+                        @if ($user->role == 'operator')
                             <li><a class="dropdown-item" href="{{url('admin/perusahaan/new')}}">Baru</a></li>
                             <li><a class="dropdown-item" href="{{url('admin/perusahaan/import')}}">Import</a></li>
-                            <li><a class="dropdown-item" href="{{url('admin/perusahaan/export')}}">Eksport</a></li>
+                            <li><a class="dropdown-item" href="{{url('admin/perusahaan')}}">Eksport</a></li>
                         @endif
                     </ul>
                 </li>

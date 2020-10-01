@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth ;
 use Illuminate\Support\Facades\DB;
@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function index(){
-        $user = DB::table('sii_users')
-            ->where('id', Auth::id())
-            ->first();
-
-        $logs = DB::table('sii_log')->limit(20)->get();
+        /**
+         * method ini digunakan untuk menampilkan halaman dashboard admin
+         */
+        $logs = DB::table('sii_log') // mendapatkan data log
+            ->orderBy('id', 'desc') // diurutkan berdasarkan id secara descending
+            ->limit(20) // hanya sebanyak 20 data
+            ->get();
 
         $industri = DB::table('sii_perusahaan')
             ->leftJoin('sii_industri_tipe', 'sii_industri_tipe.id', 'sii_perusahaan.tipe_industri')
@@ -38,11 +40,11 @@ class DashboardController extends Controller
                 'longitude'
             );
 
-        $map_data = $industri->get();
-        $get_five = $industri->limit(5)->get();
+        $map_data = $industri->get(); // mendapatkan data perusahaan untuk peta
+        $get_five = $industri->limit(5)->get(); // mendapatkan data perusahaan sebanyak 5 terakhir
 
         return view('cpanel.dashboard.index', [
-            'user' => $user,
+            'user' => $this->get_auth_user(),
             'logs' => $logs,
             'industri' => $get_five,
             'map_data' => $map_data
